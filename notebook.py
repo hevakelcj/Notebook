@@ -10,6 +10,7 @@ Author  : Chunjun Li <hevakelcj@gmail.com>
 Date    : 2014-12-01
 
 [2014-12-01 V1.0] create and first commit.
+[2014-12-21 V1.1] add "decode" operation
 '''
 
 import sys
@@ -19,11 +20,8 @@ import henc
 
 #===============================================================================
 usage_template = '''\
-Usage: %s create|read|write|chpwd notename\
+Usage: %s create|read|write|decode|chpwd notename\
 '''
-
-ciphers = '-camellia-256-ofb'
-openssl_command = 'openssl enc %s -in "%s" -out "%s" -k "%s" -a ' + ciphers
 
 #===============================================================================
 def enc_file(txt_filename, enc_filename, passwd):
