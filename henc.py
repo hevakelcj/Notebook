@@ -21,7 +21,7 @@ class HEnc:
         os.system(command)
 
     def __init__(self):
-        self._ciphers_sequeue = 'camellia-256-ofb|seed-cfb|des-ede3-cfb8|blowfish|rc4|aes-256-xts|idea|base64'
+        self._ciphers_sequeue = 'camellia256|seed-cfb|aes256|blowfish|rc4|cast-cbc|des-ecb|base64'
         self._passwd = ''
 
     def SetPasswd(self, passwd):

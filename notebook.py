@@ -124,11 +124,24 @@ def change_passwd(notename):
         print('Cancel.')
     os.unlink(txt_filename)
 
+def decode_notebook(notename):
+    txt_filename = get_txt_filename(notename)
+    enc_filename = get_enc_filename(notename)
+
+    if not os.path.exists(enc_filename):
+        print('ERROR: %s doesn\'t exist!' % enc_filename)
+        return
+
+    passwd = get_passwd()
+    dec_file(enc_filename, txt_filename, passwd)
+    pass
+
 #===============================================================================
 def notebook(operate, notename):
     switch_operate = {'create':create_notebook,\
                       'read'  :read_notebook,\
                       'write' :write_notebook,\
+                      'decode':decode_notebook,\
                       'chpwd' :change_passwd}
     try:
         switch_operate[operate](notename)
