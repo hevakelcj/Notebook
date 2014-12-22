@@ -88,13 +88,16 @@ def open_notebook(notename, is_save):
 
     passwd = get_passwd()
     dec_file(enc_filename, txt_filename, passwd)
-    os.system('vi "%s"' % txt_filename)
     if is_save:
+        os.system('vi "%s"' % txt_filename)
         if ask_yes_or_no('Is need save this modifiction?', True):
             enc_file(txt_filename, enc_filename, passwd)
             print('Saved.')
         else:
             print('Cancel.')
+    else:
+        os.system('vi -R "%s"' % txt_filename)
+
     os.unlink(txt_filename)
  
 def read_notebook(notename):
