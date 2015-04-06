@@ -58,11 +58,21 @@ def get_new_passwd():
         print('WARN: verify failure!')
     return passwd
 
-def ask_yes_or_no(prompt, default):
-    if default:
-        return not raw_input(prompt + ' [yes]/no: ') == 'no'
+def ask_yes_or_no(prompt, default_yes):
+    if default_yes:
+        while True:
+            answer = raw_input(prompt + ' [yes]/no: ')
+            if answer == '' or answer == 'yes':
+                return True
+            elif answer == 'no':
+                return False
     else:
-        return raw_input(prompt + ' yes/[no]: ') == 'yes'
+        while True:
+            answer = raw_input(prompt + ' yes/[no]: ')
+            if answer == '' or answer == 'no':
+                return False
+            elif answer == 'yes':
+                return True
 
 #===============================================================================
 def create_notebook(notename):
@@ -189,8 +199,14 @@ def test_enc_dec_file():
 
     print('done')
 
+def test_yes_or_no():
+    print(ask_yes_or_no('Default Yes', True))
+    print(ask_yes_or_no('Default No', False))
+    pass
+
 def test():
     test_enc_dec_file()
+    test_yes_or_no()
     #TODO
 
 #===============================================================================
