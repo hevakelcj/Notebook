@@ -3,6 +3,15 @@
 import os
 import base64
 
+tmp_dir = '/tmp/henc/'
+
+tmp_file_1 = tmp_dir + 'tmpfile-1'
+tmp_file_2 = tmp_dir + 'tmpfile-2'
+
+def make_tmp_dir():
+    if not os.path.exists(tmp_dir):
+        os.mkdir(tmp_dir, 0700)
+
 class HEnc:
     _openssl_template = 'openssl enc -%s -in "%s" -out "%s" -k "%s"'
 
@@ -23,6 +32,8 @@ class HEnc:
     def __init__(self):
         self._ciphers_sequeue = 'camellia256|seed-cfb|aes256|blowfish|rc4|cast-cbc|des-ecb|base64'
         self._passwd = ''
+
+        make_tmp_dir()
 
     def SetPasswd(self, passwd):
         self._passwd = passwd
@@ -46,8 +57,8 @@ class HEnc:
 
     def Encode(self, src_filename, des_filename):
         cipher_key = self.GetCipherAndKeyList()
-        tmp_filename_src = 'temp1'
-        tmp_filename_des = 'temp2'
+        tmp_filename_src = tmp_file_1 
+        tmp_filename_des = tmp_file_2
         os.system('cp "%s" "%s"' % (src_filename, tmp_filename_src))
         for (cipher, key) in cipher_key:
             HEnc.openssl_enc_dec('e', tmp_filename_src, tmp_filename_des, key, cipher)
@@ -57,8 +68,8 @@ class HEnc:
     def Decode(self, src_filename, des_filename):
         cipher_key = self.GetCipherAndKeyList()
         cipher_key.reverse()
-        tmp_filename_src = 'temp1'
-        tmp_filename_des = 'temp2'
+        tmp_filename_src = tmp_file_1
+        tmp_filename_des = tmp_file_2
         os.system('cp "%s" "%s"' % (src_filename, tmp_filename_src))
         for (cipher, key) in cipher_key:
             HEnc.openssl_enc_dec('d', tmp_filename_src, tmp_filename_des, key, cipher)
