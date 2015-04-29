@@ -41,8 +41,14 @@ def dec_file(enc_filename, txt_filename, passwd):
     del e
 
 #===============================================================================
+tmp_dir = '/tmp/notebook/'
+
+def make_tmp_dir():
+    if not os.path.exists(tmp_dir):
+        os.mkdir(tmp_dir, 0700)
+
 def get_txt_filename(notename):
-    return notename + '.txt' 
+    return tmp_dir + notename + '.txt' 
 
 def get_enc_filename(notename):
     return notename + '.enc' 
@@ -155,6 +161,7 @@ def notebook(operate, notename):
                       'decode':decode_notebook,\
                       'chpwd' :change_passwd}
     try:
+        make_tmp_dir()
         switch_operate[operate](notename)
     except KeyError:
         print('ERROR: operate should be "%s".' % '|'.join(switch_operate.keys()))
